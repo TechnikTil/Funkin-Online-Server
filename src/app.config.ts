@@ -395,7 +395,6 @@ export default config({
                     const reqPlayer = await authPlayer(req);
                     if (!reqPlayer || !reqPlayer.isMod)
                         return res.sendStatus(400);
-                    console.log(await getPlayerByName(req.query.username as string));
                     return res.send(await getPlayerByName(req.query.username as string));
                 }
                 catch (exc) {

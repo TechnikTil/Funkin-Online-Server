@@ -356,7 +356,6 @@ export async function getPlayerByName(name: string) {
         return null;
 
     try {
-        console.log(name);
         return await prisma.user.findFirstOrThrow({
             where: {
                 name: {

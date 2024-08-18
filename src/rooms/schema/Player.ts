@@ -12,6 +12,7 @@ export class Player extends Schema {
     @type("boolean") hasLoaded: boolean = false;
     @type("boolean") hasEnded: boolean = false;
     @type("number") ping: number = 0;
+    @type("number") pingStamp: number = -1;
     @type("boolean") isReady: boolean = false;
     @type("string") skinMod: string = null;
     @type("string") skinName: string = null;
@@ -20,6 +21,7 @@ export class Player extends Schema {
     @type("string") status: string = "";
     @type("boolean") botplay: boolean = false;
     @type("boolean") verified: boolean = false;
+    @type("number") strum: number = 0;
 
     @type({ array: "number" }) arrowColor0: number[] = [];
     @type({ array: "number" }) arrowColor1: number[] = [];

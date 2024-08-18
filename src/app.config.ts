@@ -44,7 +44,7 @@ export default config({
                 if (rooms.length >= 1) {
                     rooms.forEach((room) => {
                         playerCount += room.clients;
-                        if (!room.private && room.clients == 1) {
+                        if (!room.private && !room.locked) {
                             page += "<div class='room'> Code: " + room.roomId + "<br>Player: " + room.metadata.name + "<br>Ping: " + room.metadata.ping + "ms" + "</div>";
                             hasPublicRoom = true;
                         }
@@ -389,6 +389,19 @@ export default config({
             */
 
             //GET
+
+            app.get("/api/network/admin/user/data", async (req, res) => {
+                try {
+                    const reqPlayer = await authPlayer(req);
+                    if (!reqPlayer || !reqPlayer.isMod)
+                        return res.sendStatus(400);
+                    console.log(await getPlayerByName(req.query.username as string));
+                    return res.send(await getPlayerByName(req.query.username as string));
+                }
+                catch (exc) {
+                    res.sendStatus(500);
+                }
+            });
 
             app.get("/api/network/song/comments", async (req, res) => {
                 try {
@@ -763,7 +776,7 @@ export async function countPlayers():Promise<number[]> {
     if (rooms.length >= 1) {
         rooms.forEach((room) => {
             playerCount += room.clients;
-            if (!room.private && room.clients == 1)
+            if (!room.private && !room.locked)
                 roomCount++;
         });
     }

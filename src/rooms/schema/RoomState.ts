@@ -8,10 +8,6 @@ export class RoomState extends Schema {
   @type({array: "string"}) diffList: string[] = [];
   @type("string") modDir: string = "";
   @type("string") modURL: string = "";
-  //TODO change to 'players:Array'
-  @type(Player) player1:Player = new Player();
-  @type(Player) player2:Player = new Player();
-  //@type(Player) player3:Player;
   @type("boolean") isPrivate: boolean = true;
   @type("boolean") isStarted: boolean = false;
   @type("boolean") swagSides: boolean = false;
@@ -19,4 +15,7 @@ export class RoomState extends Schema {
   @type("number") health: number = 0.0;
   @type({ map: "string" }) gameplaySettings = new MapSchema<string>();
   @type("boolean") permitModifiers: boolean = false;
+  @type({ map: Player }) players = new MapSchema<Player>();
+  @type("string") ownerSID: string = "";
+  @type("boolean") partyMode: boolean = false;
 }

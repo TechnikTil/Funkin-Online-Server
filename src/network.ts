@@ -511,19 +511,31 @@ export async function getPlayerByName(name: string) {
     if (!name)
         return null;
 
-    try {
-        return await prisma.user.findFirstOrThrow({
-            where: {
-                name: {
-                    equals: name,
-                    mode: "insensitive"
-                }
+    var user = await prisma.user.findFirst({
+        where: {
+            name: {
+                equals: name,
+                mode: "insensitive"
             }
-        });
+        }
+    });
+
+    var userSensitive = await prisma.user.findFirst({
+        where: {
+            name: {
+                equals: name
+            }
+        }
+    });
+
+    if(userSensitive !== null && user === null)
+    {
+        // fixes weird bug with special characters
+        if(name.toLowerCase() == userSensitive.name.toLowerCase())
+            return userSensitive;
     }
-    catch (exc) {
-        return null;
-    }
+
+    return user;
 }
 
 export async function getPlayerByEmail(email: string) {

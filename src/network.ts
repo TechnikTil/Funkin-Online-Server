@@ -668,6 +668,9 @@ export async function pingPlayer(id: string) {
 export async function topScores(id: string, strum:number, page: number): Promise<Array<ScoreData>> {
     let scores: ScoreData[] = await topScoresRaw(id, strum, page);
 
+    if(scores == null)
+        return null;
+
     function sortingHelper(a: number, b: number) {
         let result: number = 0;
 
